@@ -8,6 +8,9 @@ export function runSimulation() {
   const canvas = document.querySelector('canvas')! as HTMLCanvasElement;
   const ctx = canvas.getContext('2d')!;
 
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
   const fps = 35;
 
   const interval = setInterval(() => {
@@ -97,9 +100,16 @@ export function getNextBalls(balls: Ball[], rect: DOMRect): Ball[] {
       let ball1_next = { ...ball1, vx: -ball1.vx, vy: -ball1.vy };
       let ball2_next = { ...ball2, vx: -ball2.vx, vy: -ball2.vy };
 
+      let count = 0;
       while (areColliding(ball1_next, ball2_next)) {
         ball1_next = getNextPosition(ball1_next);
         ball2_next = getNextPosition(ball2_next);
+
+        count++;
+
+        if (count > 200) {
+          break;
+        }
       }
 
       proposedNextBalls[i] = ball1_next;
