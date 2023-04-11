@@ -78,12 +78,19 @@ export function getNextBalls(balls: Ball[], rect: DOMRect): Ball[] {
           y: rect.height - ball.radius - 1,
           vy: -ball.vy,
         };
+      } else if (nextPosition.x - ball.radius <= 0) {
+        return {
+          ...ball,
+          x: ball.radius + 1,
+          vx: -ball.vx,
+        };
+      } else {
+        return {
+          ...ball,
+          x: rect.width - ball.radius - 1,
+          vx: -ball.vx,
+        };
       }
-
-      return {
-        ...ball,
-        vx: -ball.vx,
-      };
     }
 
     return nextPosition;
